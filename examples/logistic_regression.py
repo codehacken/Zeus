@@ -3,6 +3,7 @@
 
 #!/usr/bin/python
 
+import pydot
 import theano as th                             # This is the theano library.
 import theano.tensor as T                       # Tensor from theano.
 from numpy import random as rn                  # Random number generator.
@@ -16,6 +17,19 @@ feats = 784                                     # This is the number of the feat
 # The low is 0 and high is 2 but not included.
 D = (rn.randn(N, feats), rn.randint(size=N, low=0, high=2))
 training_steps = 10000
+
+'''
+Understanding the types of variables and how to access the information.
+
+                    >>> type(y.owner.inputs[1])
+                    <class 'theano.tensor.var.TensorVariable'>
+                    >>> type(y.owner.inputs[1].owner)
+                    <class 'theano.gof.graph.Apply'>
+                    >>> y.owner.inputs[1].owner.op
+                    <theano.tensor.elemwise.DimShuffle object at 0x106fcaf10>
+                    >>> y.owner.inputs[1].owner.inputs
+                    [TensorConstant{2.0}]
+'''
 
 # Construct the graph.
 # Declare all the THEANO variables.
@@ -36,6 +50,7 @@ gw, gb = T.grad(cost, [w, b])                   # Compute the gradient of the co
                                                 # following section of this tutorial)
 
 # Compile
+# 0.1 is the learning on the gradient.
 train = th.function(
     inputs=[x, y],
     outputs=[prediction, xent],
@@ -51,3 +66,6 @@ print w.get_value(), b.get_value()
 print "target values for D:", D[1]
 print "prediction on D:", predict(D[0])
 
+# Generate the training graph.
+# There is th.printing.pprint and th.printing.debugprint too.
+th.printing.pydotprint(train, outfile="graphs/train.png", var_with_name_simple=True)
