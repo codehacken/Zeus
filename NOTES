@@ -1,0 +1,20 @@
+-----
+NOTES
+-----
+
+For different modes:-
+TEST MODE
+---------
+[global]
+mode = FAST_COMPILE
+
+EXECUTION MODE (For production execution)
+--------------
+[global]
+mode = FAST_RUN
+
+DEBUG
+-----
+[global]
+mode = DebugMode
+
