@@ -4,3 +4,7 @@ device = gpu0
 
 [nvcc]
 fastmath = True
+
+[cuda]
+root = /usr/local/cuda-7.0/
+
