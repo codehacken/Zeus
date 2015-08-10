@@ -9,8 +9,6 @@ import theano.tensor as tt                      # Tensor from theano.
 from numpy import random as rn                  # Random number generator.
 import numpy as np
 
-theano.config.floatX = 'float32'
-
 # Define the inputs.
 N = 400                                         # This is the number of input data points.
 feats = 784                                     # This is the number of the features / data point.
