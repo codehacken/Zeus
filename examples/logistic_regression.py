@@ -45,14 +45,14 @@ x.tag.test_value = D[0]
 y.tag.test_value = D[1]
 
 # Construct Theano expression graph
-p_1 = 1 / (1 + tt.exp(-tt.dot(x, w) - b))         # Probability that target = 1
-prediction = p_1 > 0.5                          # The prediction thresholded.
-xent = -y * tt.log(p_1) - (1-y) * tt.log(1-p_1)   # Cross-entropy loss function
+p_1 = 1 / (1 + tt.exp(-tt.dot(x, w) - b))           # Probability that target = 1
+prediction = p_1 > 0.5                              # The prediction thresholded.
+xent = -y * tt.log(p_1) - (1-y) * tt.log(1-p_1)     # Cross-entropy loss function
 cost = tt.cast(xent.mean(), 'float32') + \
-       0.01 * (w ** 2).sum()                    # The cost to minimize
-gw, gb = tt.grad(cost, [w, b])                   # Compute the gradient of the cost
-                                                # (we shall return to this in a
-                                                # following section of this tutorial)
+       0.01 * (w ** 2).sum()                        # The cost to minimize
+gw, gb = tt.grad(cost, [w, b])                      # Compute the gradient of the cost
+                                                    # (we shall return to this in a
+                                                    # following section of this tutorial)
 
 # Compile
 # 0.1 is the learning on the gradient.
