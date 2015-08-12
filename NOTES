@@ -18,3 +18,5 @@ DEBUG
 [global]
 mode = DebugMode
 
+[blas]
+ldflags = -lblas -lgfortran
