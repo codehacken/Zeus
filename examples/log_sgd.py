@@ -36,7 +36,7 @@ References:
 """
 __docformat__ = 'restructedtext en'
 
-import _pickle
+import pickle
 import gzip
 import os
 import sys
@@ -183,30 +183,32 @@ def load_data(dataset):
     #############
 
     # Download the MNIST dataset if it is not present
-    data_dir, data_file = os.path.split(dataset)
-    if data_dir == "" and not os.path.isfile(dataset):
-        # Check if dataset is in the data directory.
-        new_path = os.path.join(
-            os.path.split(__file__)[0],
-            "..",
-            "data",
-            dataset
-        )
-        if os.path.isfile(new_path) or data_file == 'datasets/mnist/mnist.pkl.gz':
-            dataset = new_path
+    # data_dir, data_file = os.path.split(dataset)
+    # if data_dir == "" and not os.path.isfile(dataset):
+    #     # Check if dataset is in the data directory.
+    #     new_path = os.path.join(
+    #         os.path.split(__file__)[0],
+    #         "..",
+    #         "data",
+    #         dataset
+    #     )
+    #     if os.path.isfile(new_path) or data_file == 'datasets/mnist/mnist.pkl.gz':
+    #         dataset = new_path
+    #
+    # if (not os.path.isfile(dataset)) and data_file == 'mnist.pkl.gz':
+    #     import urllib
+    #     origin = (
+    #         'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
+    #     )
+    #     print('Downloading data from %s' % origin.urllib.urlretrieve(origin, dataset))
+    #
+    # print('... loading data')
 
-    if (not os.path.isfile(dataset)) and data_file == 'mnist.pkl.gz':
-        import urllib
-        origin = (
-            'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
-        )
-        print('Downloading data from %s' % origin.urllib.urlretrieve(origin, dataset))
-
-    print('... loading data')
+    dataset = "../datasets/mnist/mnist.pkl.gz"
 
     # Load the dataset
     f = gzip.open(dataset, 'rb')
-    train_set, valid_set, test_set = _pickle.load(f)
+    train_set, valid_set, test_set = pickle.load(f, encoding="iso-8859-1")
     f.close()
     #train_set, valid_set, test_set format: tuple(input, target)
     #input is an numpy.ndarray of 2 dimensions (a matrix)
@@ -277,9 +279,9 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     test_set_x, test_set_y = datasets[2]
 
     # compute number of minibatches for training, validation and testing
-    n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
-    n_valid_batches = valid_set_x.get_value(borrow=True).shape[0] / batch_size
-    n_test_batches = test_set_x.get_value(borrow=True).shape[0] / batch_size
+    n_train_batches = train_set_x.get_value(borrow=True).shape[0] // batch_size
+    n_valid_batches = valid_set_x.get_value(borrow=True).shape[0] // batch_size
+    n_test_batches = test_set_x.get_value(borrow=True).shape[0] // batch_size
 
     ######################
     # BUILD ACTUAL MODEL #
@@ -420,8 +422,8 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                     )
 
                     # save the best model
-                    with open('best_model.pkl', 'w') as f:
-                        _pickle.dump(classifier, f)
+                    with open('../models/mnist/log_sgd/best_model.pkl', 'wb') as f:
+                        pickle.dump(classifier, f)
 
             if patience <= iter:
                 done_looping = True
@@ -435,11 +437,10 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
         )
         % (best_validation_loss * 100., test_score * 100.)
     )
-    print('The code run for %d epochs, with %f epochs/sec' %
-          epoch, 1. * epoch / (end_time - start_time))
-    print >> sys.stderr, ('The code for file ' +
-                          os.path.split(__file__)[1] +
-                          ' ran for %.1fs' % (end_time - start_time))
+    print("The code ran for {0:1d} epochs, with {1:.3f} epochs/sec"
+          .format(epoch, 1. * epoch / (end_time - start_time)))
+    print('The code for file ' + os.path.split(__file__)[1] +
+          ' ran for {0:.1f}s'.format(end_time - start_time), file=sys.stderr)
 
 
 def predict():
@@ -449,7 +450,7 @@ def predict():
     """
 
     # load the saved model
-    classifier = _pickle.load(open('best_model.pkl'))
+    classifier = pickle.load(open('../models/mnist/log_sgd/best_model.pkl'))
 
     # compile a predictor function
     predict_model = theano.function(
