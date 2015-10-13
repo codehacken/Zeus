@@ -94,7 +94,7 @@ class LeNetConvPoolLayer(object):
             image_shape=image_shape
         )
 
-        # downsample each feature map individually, using maxpooling
+        # down-sample each feature map individually, using max pooling.
         pooled_out = downsample.max_pool_2d(
             input=conv_out,
             ds=poolsize,
@@ -141,7 +141,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     valid_set_x, valid_set_y = datasets[1]
     test_set_x, test_set_y = datasets[2]
 
-    # compute number of minibatches for training, validation and testing
+    # compute number of mini-batches for training, validation and testing
     n_train_batches = train_set_x.get_value(borrow=True).shape[0]
     n_valid_batches = valid_set_x.get_value(borrow=True).shape[0]
     n_test_batches = test_set_x.get_value(borrow=True).shape[0]
