@@ -1,7 +1,8 @@
+#!/usr/bin/python3
+
 # This is an example program to construct a simple logistic regression using
 # Theano.
 
-#!/usr/bin/python
 
 from __future__ import print_function
 import theano                                   # This is the theano library.

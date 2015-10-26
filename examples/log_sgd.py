@@ -360,6 +360,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                                   # considered significant
     validation_frequency = min(n_train_batches, patience / 2)
                                   # go through this many
+                                  # go through this many
                                   # minibatche before checking the network
                                   # on the validation set; in this case we
                                   # check every epoch
