@@ -7,7 +7,7 @@ import theano
 import theano.tensor as T
 
 def load_data(dataset):
-    dataset = "../datasets/mnist/mnist.pkl.gz"
+    dataset = "datasets/mnist/mnist.pkl.gz"
 
     # Load the dataset
     f = gzip.open(dataset, 'rb')
