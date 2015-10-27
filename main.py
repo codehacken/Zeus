@@ -233,7 +233,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
                        ' ran for %.2fm' % ((end_time - start_time) / 60.)))
 
     # Write the output to a pickle file.
-    with open('datasets/pickle/cnn_layer/mnist.pickle', 'wb') as handle:
+    with open('data/pickle/cnn_layer/mnist.pickle', 'wb') as handle:
         pickle.dump(cost_ij, handle)
 
 # Main Function.

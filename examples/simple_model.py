@@ -48,6 +48,7 @@ for i in range(1):
                 # Perform a horizontal stack of array values.
                 out = np.vstack((out, np.hstack((output[0], output[1], output[2]))))
 
+print(w.get_value())
 # Process the output.
 # for i in range(0, len(out)):
 #     print(out[i][0].flatten())
