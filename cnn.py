@@ -235,7 +235,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # Write the output to a pickle file.
     with open('data/pickle/cnn_layer/mnist.pickle', 'wb') as handle:
         pickle.dump([cost_ij, layer0.W, layer0.b, layer1.W, layer1.b, layer2.W,
-                     layer2.b] , handle)
+                     layer2.b], handle)
 
 # Main Function.
 if __name__ == '__main__':
