@@ -135,9 +135,17 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
         for param_i, grad_i in zip(params, grads)
     ]
 
+    """
+    The output includes:
+    1. The cost function output.
+    2. The layer 0 output. (Post convolution layer and maxpooling).
+    3. The layer 1 output.
+    4. The layer 2 output (This is a fully connected hidden layer).
+    5. The predicted output Y.
+    """
     train_model = theano.function(
         [index],
-        [cost, layer0.output, layer1.output, layer2.output],
+        [cost, layer0.output, layer1.output, layer2.output, y],
         updates=updates,
         givens={
             x: train_set_x[index * batch_size: (index + 1) * batch_size],
@@ -233,15 +241,21 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
                        ' ran for %.2fm' % ((end_time - start_time) / 60.)))
 
     # Write the output to a pickle file.
-    with open('data/pickle/cnn_layer/mnist.pickle', 'wb') as handle:
+    with open('data/pickle/cnn_layer/mnist_batch_'+ str(batch_size)+'.pickle', 'wb') as handle:
         pickle.dump([cost_ij, layer0.W, layer0.b, layer1.W, layer1.b, layer2.W,
                      layer2.b], handle)
 
 # Main Function.
 if __name__ == '__main__':
-    evaluate_lenet5()
-
-
+    # Increasing the batch-size to 2500, so that there are more points to cluster.
+    # This is likely to have an effect on the gradient descent which might become slower.
+    # Modify the code for it if that is the problem.
+    
+    # Execute the training for multiple batch_size from 500 to 5000.
+    for i in range(1000, 5000, 1000):
+        print("-----Training Batch Size " + i + "-----")
+        evaluate_lenet5(batch_size=i)
+    
 def experiment(state, channel):
     evaluate_lenet5(state.learning_rate, dataset=state.dataset)
 
