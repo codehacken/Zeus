@@ -6,4 +6,5 @@ __pycache__/
 *.pkl.gz
 *.pickle
 *.pkl
+*.out
 
