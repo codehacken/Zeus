@@ -191,10 +191,6 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
                 print('training @ iter = ', iter)
 
             cost_ij = train_model(minibatch_index)
-            # if (flag == 0):
-            #     print(cost_ij[0].shape, cost_ij[1].shape, cost_ij[2].shape, cost_ij[3].shape)
-            #     flag = 1
-
             if (iter + 1) % validation_frequency == 0:
 
                 # compute zero-one loss on validation set
@@ -253,7 +249,7 @@ if __name__ == '__main__':
     
     # Execute the training for multiple batch_size from 500 to 5000.
     for i in range(1000, 5000, 1000):
-        print("-----Training Batch Size " + i + "-----")
+        print("-----Training Batch Size " + str(i) + "-----")
         evaluate_lenet5(batch_size=i)
     
 def experiment(state, channel):
