@@ -39,16 +39,20 @@ gradient = T.grad(cost=cost, wrt=Y)
 updates = [[w, w - gradient*0.01]]
 
 # Create a shared function to train the model.
-train = th.function(inputs=[X,Y], outputs=[y, cost, gradient], updates=updates, allow_input_downcast=True)
+train = th.function(inputs=[X,Y], outputs=[y, cost, gradient, Y], updates=updates, allow_input_downcast=True)
 
-out = np.zeros([1,3], dtype='f')
+out = np.zeros([1,4], dtype='f')
+
+# This is a single loop of i starting from 0.
 for i in range(1):
-        for x, y in zip(trX, trY):
-                output = train(x, y)
-                # Perform a horizontal stack of array values.
-                out = np.vstack((out, np.hstack((output[0], output[1], output[2]))))
+    for x, y in zip(trX, trY):
+        output = train(x, y)
+        
+        # Perform a horizontal stack of array values.
+        out = np.vstack((out, np.hstack((output[0], output[1], output[2], output[3]))))
+        print(output[3])
 
-print(w.get_value())
+# print(w.get_value())
 # Process the output.
 # for i in range(0, len(out)):
 #     print(out[i][0].flatten())
