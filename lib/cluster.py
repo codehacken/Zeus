@@ -52,6 +52,8 @@ class NeuralKMeans():
     def figure(self, fig_title, n_clusters=None):
         # Once the T-SNE is processed, assign a cluster-ID using K-Means
         # to each data point.
+        # n_clusters can be any set of label to the datapoints as long as the shape
+        # remains the same i.e. the number of rows.
         n_cluster_color = []
         if(n_clusters == None):
             n_clusters = self._n_clusters
