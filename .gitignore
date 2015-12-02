@@ -7,4 +7,5 @@ __pycache__/
 *.pickle
 *.pkl
 *.out
+*.png
 
