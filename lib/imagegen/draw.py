@@ -7,19 +7,50 @@ from PIL import Image, ImageFont, ImageDraw
 from lib.imagegen.shape import Square, Circle, Triangle
 
 # Functions to generate images.
-def gen_one_shape_image(image_size, max_shape_size, b_color, fill_color, outline_color):
+def gen_one_shape_image(image_size, max_shape_size, b_color, base_folder_name, color_list):
     # Create the Image.
     im = ImageCreate(image_size, 1, background_color=b_color)
+    shape_id = ['sq','cr','tr']
     
     # Generate squares.
-    for i in range(0, image_size[0], max_shape_size):
-        for j in range(0, image_size[1], max_shape_size):
-            sq = Square((100, 200), 100, fill_color='black', outline_color='black')
-            im.create_new_image()
-            im.dr_add(sq)
-    
-    
-    
+    for color in color_list:
+        for i in range(0, image_size[0] - max_shape_size, max_shape_size):
+            for j in range(0, image_size[1] - max_shape_size, max_shape_size):
+                # Generate the square and put in the image.
+                sq = Square((i, j), max_shape_size, fill_color=color, outline_color=color)
+                im.create_new_image()
+                im.dr_add(sq)
+            
+                # Store the image.
+                filename = base_folder_name + "squares/" + shape_id[0] + "_" + color + "_1_" + str(max_shape_size) + "_" + str(i) + "_" + str(j) + ".png"
+                im.get_image().save(filename)
+                 
+    # Generate Circles.
+    for color in color_list:
+        for i in range(int(max_shape_size / 2), image_size[0] - int(max_shape_size/2), max_shape_size):
+            for j in range(int(max_shape_size / 2), image_size[0] - int(max_shape_size/2), max_shape_size):
+                # Generate the square and put in the image.
+                cr = Circle((i, j), max_shape_size, fill_color=color, outline_color=color)
+                im.create_new_image()
+                im.dr_add(cr)
+            
+                # Store the image.
+                filename = base_folder_name + "circle/" + shape_id[1] + "_" + color + "_1_" + str(max_shape_size) + "_" + str(i) + "_" + str(j) + ".png"
+                im.get_image().save(filename)
+
+    # Generate Triangles.
+    for color in color_list:
+        for i in range(int(max_shape_size / 2), image_size[0] - int(max_shape_size/2), max_shape_size):
+            for j in range(int(max_shape_size / 2), image_size[0] - int(max_shape_size/2), max_shape_size):
+                # Generate the square and put in the image.
+                tr = Triangle((i, j), max_shape_size, fill_color=color, outline_color=color)
+                im.create_new_image()
+                im.dr_add(tr)
+            
+                # Store the image.
+                filename = base_folder_name + "triangles/" + shape_id[2] + "_" + color + "_1_" + str(max_shape_size) + "_" + str(i) + "_" + str(j) + ".png"
+                im.get_image().save(filename)
+
 # Draw various kinds of images.
 # Creates the images.
 class ImageCreate(object):

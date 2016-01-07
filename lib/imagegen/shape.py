@@ -117,7 +117,6 @@ class Square(_Shape):
         image_dr.rectangle((self.vertices['lu'].get_pos(),
                            self.vertices['rd'].get_pos()), fill = self.fill_color,
                            outline = self.outline_color)
-        return image_dr
 
 """
 Define a Circle.
@@ -156,7 +155,6 @@ class Circle(_Shape):
                           (center[0] + r, center[1] + r)),
                          fill = self.fill_color, 
                          outline = self.outline_color)
-        return image_dr
 
 """
 Define a Triangle.
@@ -202,4 +200,3 @@ class Triangle(_Shape):
         image_dr.polygon((t, lb, rb),
                          fill = self.fill_color, 
                          outline = self.outline_color)
-        return image_dr
